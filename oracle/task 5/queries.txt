@@ -1,0 +1,111 @@
+INSERT INTO Stock_objtab VALUES(1004, 6750.00, 2) ;
+INSERT INTO Stock_objtab VALUES(1011, 4500.23, 2) ;
+INSERT INTO Stock_objtab VALUES(1534, 2234.00, 2) ;
+INSERT INTO Stock_objtab VALUES(1535, 3456.23, 2) ;
+INSERT INTO Stock_objtab VALUES(1734, 7843.28, 3) ;
+
+INSERT INTO Customer_objtab
+  VALUES (
+    1, 'Bruce Wayne',
+    Address_objtyp('2 Avocet Drive', 'Redwood Shores', 'CA', '95054'),
+    PhoneList_vartyp('415-555-0102')
+    ) ;
+
+INSERT INTO Customer_objtab
+  VALUES (
+    2, 'Tony Stark',
+    Address_objtyp('323 College Drive', 'Edison', 'NJ', '08820'),
+    PhoneList_vartyp('609-555-0190','201-555-0140')
+    ) ;
+    
+INSERT INTO Customer_objtab
+  VALUES (
+    3, 'Peter Parker',
+    Address_objtyp('177 Sunset Blvd', 'LA', 'CA', '90210'),
+    PhoneList_vartyp(NULL)
+    ) ;
+
+INSERT INTO Customer_objtab
+  VALUES (
+    4, 'Clark Kent',
+    Address_objtyp('85 Infinite Loop', 'Cupertino', 'CA', '95014'),
+    PhoneList_vartyp('123-456-7890','987-654-3210')
+    ) ;
+
+INSERT INTO PurchaseOrder_objtab
+  SELECT  1, REF(C),
+          SYSDATE, SYSDATE+7,
+          LineItemList_ntabtyp(),
+          NULL
+   FROM   Customer_objtab C
+   WHERE  C.CustNo = 1 ;
+   
+INSERT INTO PurchaseOrder_objtab
+  SELECT  2, REF(C),
+          SYSDATE, SYSDATE+7,
+          LineItemList_ntabtyp(),
+          NULL
+   FROM   Customer_objtab C
+   WHERE  C.CustNo = 2 ;
+   
+INSERT INTO PurchaseOrder_objtab
+  SELECT  3, REF(C),
+          SYSDATE, SYSDATE+7,
+          LineItemList_ntabtyp(),
+          NULL
+   FROM   Customer_objtab C
+   WHERE  C.CustNo = 3 ;
+   
+INSERT INTO PurchaseOrder_objtab
+  SELECT  4, REF(C),
+          SYSDATE, SYSDATE+7,
+          LineItemList_ntabtyp(),
+          NULL
+   FROM   Customer_objtab C
+   WHERE  C.CustNo = 4 ;
+   
+INSERT INTO TABLE (
+  SELECT  P.LineItemList_ntab
+   FROM   PurchaseOrder_objtab P
+   WHERE  P.PONo = 1
+  )
+  SELECT  01, REF(S), 12, 0
+   FROM   Stock_objtab S
+   WHERE  S.StockNo = 1534 ;
+   
+INSERT INTO TABLE (
+  SELECT  P.LineItemList_ntab
+   FROM   PurchaseOrder_objtab P
+   WHERE  P.PONo = 2
+  )
+  SELECT  02, REF(S), 15, 0
+   FROM   Stock_objtab S
+   WHERE  S.StockNo = 1535 ;
+   
+INSERT INTO TABLE (
+  SELECT  P.LineItemList_ntab
+   FROM   PurchaseOrder_objtab P
+   WHERE  P.PONo = 2
+  )
+  SELECT  02, REF(S), 15, 4
+   FROM   Stock_objtab S
+   WHERE  S.StockNo = 1535 ;
+   
+SELECT  *
+ FROM   Customer_objtab p
+ ORDER BY p.custname ;
+ 
+ SELECT   p.PONo, p.sumLineItems()
+ FROM    PurchaseOrder_objtab p 
+ ORDER BY p.pono ;
+ 
+ SELECT  DEREF(p.Cust_ref).custname, p.orderdate, p.ShipToAddr_obj, 
+        p.OrderDate, LineItemList_ntab
+ FROM   PurchaseOrder_objtab p;
+ 
+ SELECT   po.PONo, po.Cust_ref.CustNo, L.*
+ FROM    PurchaseOrder_objtab po, TABLE (po.LineItemList_ntab) L
+ WHERE   L.Stock_ref.StockNo = 1534 ;
+ 
+ SELECT MAX(L.DISCOUNT)
+  FROM PurchaseOrder_objtab po, TABLE (po.LineItemList_ntab) L ;
