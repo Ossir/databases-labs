@@ -1,0 +1,125 @@
+Type Date Tuple (year, day, month)
+Type year, day, month integer
+
+class Human {
+	attributes{ id : integer unique
+				name : string 
+				gender : string
+				birthday : Date
+				country : string}
+	
+	integer getAge();
+}
+
+class Author extends Human
+{
+	integer getNumberPublications() raises(noPublications);
+	List<Publication> getListPublications() raises(noPublications);
+	
+	relationship Set<Publication *> publications inverse authors;
+}
+
+class Publication ()
+{
+	attributes{ id : integer unique
+				name : string
+				annotation: string
+				publicationYear : integer 
+				price : integer
+				discount : integer}
+	
+	integer getFinalPrice();
+	List<Author> getListAuthors () raises(noAuthors);
+	
+	relationship Set<Author *> authors inverse publications;
+	relationship PublishingHouse publishingHouse inverse publications;
+}
+
+
+
+class Book extends Publication 
+{
+	attributes{ id : integer unique
+				totalPages : integer
+				binding : string}
+}
+
+class Article extends Publication
+{
+	attributes{ id : integer unique
+				firstPage : integer
+				lastPage : integer}
+}
+
+class PaperCollection extends Article
+{
+	attributes{ id : integer unique
+				conferenceTitle : string
+				tom : integer}
+	
+	relationship Collection collection inverse papers;
+}
+
+class Collection ()
+{
+	attributes{ id : integer unique
+				name : string
+				placeCollection : string
+				initiationOf : Date
+				endOf : Date
+				webAddres : string}
+	
+	List<Article> getListArticles () raises(noArticles);
+	integer getNumberArticles() raises(noArticles);
+	
+	relationship Set<PaperCollection *> papers inverse collection;
+	relationship PublishingHouse publishingHouse inverse collections;
+}
+
+class MagazineArticle extends Article
+{
+	attributes{ id : integer unique
+				name : string
+				number : integer}
+	
+	relationship Magazine magazine inverse magazineArticles;
+}
+
+class Magazine ()
+{
+	attributes{ id : integer unique
+				name : string
+				webAddress : string}
+	
+	List<Article> getListArticles () raises(noArticles);
+	integer getNumberArticles() raises(noArticles);
+	
+	relationship Set<MagazineArticle *> magazineArticles inverse magazine;
+	relationship PublishingHouse publishingHouse inverse magazines;
+}
+
+class PublishingHouse ()
+{
+	attribute string name;
+	
+	List<Book> getListBooks () raises(noBooks);
+	integer getNumberBooks() raises(noBooks);
+	
+	List<Article> getListArticles () raises(noArticles);
+	integer getNumberArticles() raises(noArticles);
+	
+	integer getNumberPublications() raises(noPublications);
+	List<Publication> getListPublications() raises(noPublications);
+	
+	integer getNumberMagazines() raises(noMagazines);
+	List<Magazine> getListMagazines() raises(noMagazines);
+	
+	
+	relationship Set<Publication *> publications inverse publishingHouse;
+	relationship Set<Magazine *> magazines inverse publishingHouse;
+	relationship Set<Collection *> collections inverse publishingHouse;
+}
+
+
+
+
