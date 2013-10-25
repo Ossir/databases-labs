@@ -1,0 +1,102 @@
+CREATE TYPE StockItem_objtyp AS OBJECT (
+  StockNo    NUMBER,
+  Price      NUMBER,
+  TaxRate    NUMBER
+  );
+  
+CREATE TYPE LineItem_objtyp AS OBJECT (
+  LineItemNo   NUMBER,
+  Stock_ref    REF StockItem_objtyp,
+  Quantity     NUMBER,
+  Discount     NUMBER
+  );
+  
+CREATE TYPE PhoneList_vartyp AS VARRAY(10) OF VARCHAR2(20);
+
+CREATE TYPE Address_objtyp AS OBJECT (
+  Street         VARCHAR2(200),
+  City           VARCHAR2(200),
+  State          CHAR(2),
+  Zip            VARCHAR2(20)
+  );
+  
+ CREATE TYPE Customer_objtyp AS OBJECT (
+  CustNo           NUMBER,
+  CustName         VARCHAR2(200),
+  Address_obj      Address_objtyp,
+  PhoneList_var    PhoneList_vartyp,
+
+  ORDER MEMBER FUNCTION
+    compareCustOrders(x IN Customer_objtyp) RETURN INTEGER
+) NOT FINAL;
+
+CREATE TYPE LineItemList_ntabtyp AS TABLE OF LineItem_objtyp;
+
+CREATE TYPE PurchaseOrder_objtyp AUTHID CURRENT_USER AS OBJECT (
+  PONo                 NUMBER,
+  Cust_ref             REF Customer_objtyp,
+  OrderDate            DATE,
+  ShipDate             DATE,
+  LineItemList_ntab    LineItemList_ntabtyp,
+  ShipToAddr_obj       Address_objtyp,
+
+  MAP MEMBER FUNCTION
+    getPONo RETURN NUMBER,
+
+  MEMBER FUNCTION
+    sumLineItems RETURN NUMBER
+  );
+  
+CREATE OR REPLACE TYPE BODY PurchaseOrder_objtyp AS 
+
+   MAP MEMBER FUNCTION getPONo RETURN NUMBER is   
+      BEGIN  
+         RETURN PONo;   
+      END;   
+    
+   MEMBER FUNCTION sumLineItems RETURN NUMBER IS  
+      i          INTEGER;  
+      StockVal   StockItem_objtyp;  
+      Total      NUMBER := 0;
+  
+   BEGIN
+      IF (UTL_COLL.IS_LOCATOR(LineItemList_ntab)) -- check for locator
+         THEN
+            SELECT SUM(L.Quantity * L.Stock_ref.Price) INTO Total
+            FROM   TABLE(CAST(LineItemList_ntab AS LineItemList_ntabtyp)) L;
+      ELSE
+         FOR i in 1..SELF.LineItemList_ntab.COUNT LOOP  
+            UTL_REF.SELECT_OBJECT(LineItemList_ntab(i).Stock_ref,StockVal);  
+            Total := Total + SELF.LineItemList_ntab(i).Quantity * 
+                                                            StockVal.Price;  
+         END LOOP;  
+      END IF;  
+   RETURN Total;  
+   END;  
+END; 
+
+CREATE OR REPLACE TYPE BODY Customer_objtyp AS
+  ORDER MEMBER FUNCTION
+  compareCustOrders (x IN Customer_objtyp) RETURN INTEGER IS
+  BEGIN
+    RETURN CustNo - x.CustNo;
+  END;
+END;
+
+CREATE TABLE Customer_objtab OF Customer_objtyp (CustNo PRIMARY KEY) 
+   OBJECT IDENTIFIER IS PRIMARY KEY;
+   
+CREATE TABLE Stock_objtab OF StockItem_objtyp (StockNo PRIMARY KEY)
+   OBJECT IDENTIFIER IS PRIMARY KEY;
+   
+CREATE TABLE PurchaseOrder_objtab OF PurchaseOrder_objtyp (  
+   PRIMARY KEY (PONo),                                       
+   FOREIGN KEY (Cust_ref) REFERENCES Customer_objtab)        
+   OBJECT IDENTIFIER IS PRIMARY KEY                          
+   NESTED TABLE LineItemList_ntab STORE AS PoLine_ntab (     
+     (PRIMARY KEY(NESTED_TABLE_ID, LineItemNo))              
+     ORGANIZATION INDEX COMPRESS)                            
+   RETURN AS LOCATOR
+   
+ALTER TABLE PoLine_ntab
+   ADD (SCOPE FOR (Stock_ref) IS stock_objtab) ;
