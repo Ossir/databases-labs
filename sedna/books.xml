@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<all_books>
+	<book id = "0001">
+		<genre>Фантастика</genre>
+		<author>Стругацкий А.Н.</author>
+		<author>Стругацкий Б.Н.</author>
+		<title>Трудно быть богом</title>
+		<year>2003</year>
+		<city>Москва</city>
+		<publisher>Мода-Пресс</publisher>
+		<annotation>Классика отечественной фантастики.</annotation>
+		<pages>321</pages>
+		<cover>Твердый</cover>
+		<price>100</price>
+	</book>
+	<book id = "0002">
+		<genre>Ужасы</genre>
+		<author>Стивен Кинг</author>
+		<title>Темная Башня</title>
+		<year>2006</year>
+		<city>Москва</city>
+		<publisher>МосИздат</publisher>
+		<annotation>Наступают последние дни странствия Роланда Дискейна и его друзей. Темная Башня все ближе... Но теперь последним из стрелков угрожает новая опасность. Дитя-демон Мордред, которому силы Тьмы предрекли жребий убийцы Роланда, вырос - и готов исполнить свою миссию. Все сущее служит Лучу? Все сущее служит Алому Королю? Ответ на этот вопрос - в последней книге легендарного сериала "Темная Башня"!</annotation>
+		<pages>816</pages>
+		<cover>Твердый</cover>
+		<price>1000</price>
+	</book>
+		<book id = "0003">
+		<genre>Ужасы</genre>
+		<author>Лавкрафт Г.Ф.</author>
+		<title>Хребты безумия</title>
+		<year>2001</year>
+		<city>Санкт-Петербург</city>
+		<publisher>СПБ</publisher>
+		<annotation>Из цикла Ктулху</annotation>
+		<pages>321</pages>
+		<cover>Твердый</cover>
+		<price>100</price>
+	</book>
+		<book id = "0004">
+		<genre>Компьютеры</genre>
+		<author>Брукс Ф.</author>
+		<title>Мифический человеко-месяц</title>
+		<year>2001</year>
+		<city>Москва</city>
+		<publisher>Символ плюс</publisher>
+		<annotation>Библия для руководите проекта</annotation>
+		<pages>304</pages>
+		<cover>Твердый</cover>
+		<price>500</price>
+	</book>
+		<book id = "0005">
+		<genre>Фантастика</genre>
+		<author>Уэлс Г.</author>
+		<title>Человек невидимка</title>
+		<year>2003</year>
+		<city>Москва</city>
+		<publisher>Мосиздат</publisher>
+		<annotation>Про человека невидимку</annotation>
+		<pages>321</pages>
+		<cover>Мягкий</cover>
+		<price>100</price>
+	</book>
+		<book id = "0006">
+		<genre>Фантастика</genre>
+		<author>name</author>
+		<title>title</title>
+		<year>2011</year>
+		<city>city</city>
+		<publisher>publ</publisher>
+		<annotation>anot</annotation>
+		<pages>321</pages>
+		<cover>Мягкий</cover>
+		<price>100</price>
+	</book>
+		<book id = "0007">
+		<genre>Ужасы</genre>
+		<author>Стивен Кинг</author>
+		<title>Темная Башня 2</title>
+		<year>2006</year>
+		<city>Москва</city>
+		<publisher>МосИздат</publisher>
+		<annotation>Сиквел</annotation>
+		<pages>816</pages>
+		<cover>Твердый</cover>
+		<price>600</price>
+	</book>
+		<book id = "0008">
+		<genre>Фантастика</genre>
+		<author>name</author>
+		<title>title</title>
+		<year>2011</year>
+		<city>city</city>
+		<publisher>publ</publisher>
+		<annotation>anot</annotation>
+		<pages>321</pages>
+		<cover>tv</cover>
+		<price>100</price>
+	</book>
+		<book id = "0009">
+		<genre>Фантастика</genre>
+		<author>name</author>
+		<title>title</title>
+		<year>2011</year>
+		<city>city</city>
+		<publisher>publ</publisher>
+		<annotation>anot</annotation>
+		<pages>321</pages>
+		<cover>tv</cover>
+		<price>100</price>
+	</book>
+		<book id = "0010">
+		<genre>Фантастика</genre>
+		<author>name</author>
+		<title>title</title>
+		<year>2011</year>
+		<city>city</city>
+		<publisher>publ</publisher>
+		<annotation>anot</annotation>
+		<pages>321</pages>
+		<cover>tv</cover>
+		<price>100</price>
+	</book>
+		<book id = "0011">
+		<genre>Фантастика</genre>
+		<author>name</author>
+		<title>title</title>
+		<year>2011</year>
+		<city>city</city>
+		<publisher>publ</publisher>
+		<annotation>anot</annotation>
+		<pages>321</pages>
+		<cover>tv</cover>
+		<price>100</price>
+	</book>
+		<book id = "0012">
+		<genre>Фантастика</genre>
+		<author>name</author>
+		<title>title</title>
+		<year>2011</year>
+		<city>city</city>
+		<publisher>publ</publisher>
+		<annotation>anot</annotation>
+		<pages>321</pages>
+		<cover>tv</cover>
+		<price>100</price>
+	</book>
+		<book id = "0013">
+		<genre>Фантастика</genre>
+		<author>name</author>
+		<title>title</title>
+		<year>2011</year>
+		<city>city</city>
+		<publisher>publ</publisher>
+		<annotation>anot</annotation>
+		<pages>321</pages>
+		<cover>tv</cover>
+		<price>100</price>
+	</book>
+		<book id = "0014">
+		<genre>Фантастика</genre>
+		<author>name</author>
+		<title>title</title>
+		<year>2011</year>
+		<city>city</city>
+		<publisher>publ</publisher>
+		<annotation>anot</annotation>
+		<pages>321</pages>
+		<cover>tv</cover>
+		<price>100</price>
+	</book>
+		<book id = "0015">
+		<genre>Фантастика</genre>
+		<author>name</author>
+		<title>title</title>
+		<year>2011</year>
+		<city>city</city>
+		<publisher>publ</publisher>
+		<annotation>anot</annotation>
+		<pages>321</pages>
+		<cover>tv</cover>
+		<price>100</price>
+	</book>
+</all_books>

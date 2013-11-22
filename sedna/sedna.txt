@@ -1,0 +1,48 @@
+Список всех книг
+doc("books.xml")/all_books/*
+
+Список авторов без повторений
+distinct-values(doc("books.xml")/all_books/book/author)
+
+Список жанров без повторений
+distinct-values(doc("books.xml")/all_books/book/genre)
+
+Список городов и издательтв без повторений
+let $city := distinct-values(doc("books.xml")/all_books/book/city)
+let $publisher :=  distinct-values(doc("books.xml")/all_books/book/publisher)
+return ($city, $publisher)
+
+Список книг указанного автора 
+doc("books.xml")/all_books/book[author="Стивен Кинг"]
+
+Список книг указанного издательства
+doc("books.xml")/all_books/book[publisher="МосИздат"]
+
+Список книг указанного жанра
+doc("books.xml")/all_books/book[genre="Фантастика"]
+
+Список книг в указанном диапазоне лет
+let $minyear := 1990
+let $maxyear := 2006
+for $book in doc("books.xml")/all_books/book
+where $book/year > $minyear and $book/year < $maxyear
+return $book
+
+Список книг в указанном диапазоне цен
+let $minprice := 90
+let $maxprice := 200
+for $book in doc("books.xml")/all_books/book
+where $book/price > $minprice and $book/price < $maxprice
+return $book
+
+Количество книг автора и сумма книг
+let $book := doc("books.xml")/all_books/book[author="Стивен Кинг"]
+let $amount := count($book) 
+let $totalPrice := sum($book/price)
+return ($amount, $totalPrice)
+
+Список книг в твердом и мягком переплетах
+let $book := doc("books.xml")/all_books/book
+let $hard := count($book[cover="Твердый"]) 
+let $soft := count($book[cover="Мягкий"])
+return ($hard, $soft)
