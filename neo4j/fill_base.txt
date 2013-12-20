@@ -28,3 +28,5 @@ MATCH (a:user), (b:user) WHERE a.id = "ag" and b.id = "pm" CREATE (a)-[:FRIEND]-
 MATCH (a:user), (b:user) WHERE a.id = "ds" and b.id = "av" CREATE (a)-[:FRIEND]->(b);
 MATCH (a:user), (b:user) WHERE a.id = "ds" and b.id = "pm" CREATE (a)-[:FRIEND]->(b);
 MATCH (a:user), (b:user) WHERE a.id = "ds" and b.id = "dg" CREATE (a)-[:FRIEND]->(b);
+
+MATCH (a:user), (b:user) WHERE a.id = "av" and b.id = "ap" CREATE (a)-[:twoHandFriend]->(b);
