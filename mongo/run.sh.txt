@@ -1,0 +1,12 @@
+#!/bin/sh
+# Generate logs
+ruby ./generator.rb ./log.csv ./log.json
+ 
+# Import logs to db
+mongoimport -h localhost \
+            -d mongo_labs \
+            -c log_entries \
+            -u user \
+            -p password \
+            --file ./log.json \
+            --jsonArray
