@@ -1,0 +1,35 @@
+1) Упорядоченный список ФИО персон
+MATCH (u:user) 
+RETURN u.name 
+ORDER BY u.name;
+
+
+2) Список ФИО мужчин с указанием возраста, упорядоченный по убыванию возраста.
+MATCH (u:user) 
+WHERE u.gender = "m" 
+RETURN u.name, u.age 
+ORDER BY u.age DESC;
+
+
+3) Упорядоченный список ФИО друзей персоны заданными ФИО.
+MATCH (u:user)
+WHERE u.name = "D. Grishchenko" 
+MATCH (u)-[:FRIEND]->(friend) 
+RETURN friend.name 
+ORDER BY friend.name;
+
+
+4) Упорядоченный список ФИО друзей друзей персоны заданными ФИО. 
+MATCH (u:user) 
+WHERE u.name = "D. Grishchenko" 
+MATCH (u)<-[:FRIEND*2]-(friend)
+WHERE NOT friend.name = u.name 
+RETURN DISTINCT friend.name 
+ORDER BY friend.name;
+
+
+5) Упорядоченный по алфавиту список ФИО персон, в котором для каждой персоны указано количество друзей. 
+MATCH (u:user) 
+MATCH (u)<-[:FRIEND]-(friend) 
+RETURN u.name, count(friend) 
+ORDER BY u.name;

@@ -1,0 +1,30 @@
+// Create users
+CREATE (dg:user { id: "dg", name: "D. Grishchenko", gender:  "m", age: 23, city: "Chelyabinsk", groups: ["games", "computers", "photo"] });
+CREATE (nm:user { id: "ag", name: "A. Grishchenko", gender:  "f", age: 22, city: "Chelyabinsk", groups: ["dancing", "computers"] });
+CREATE (ds:user { id: "ds", name: "D. Savchenko", gender:  "m", age: 22, city: "Chelyabinsk", groups: ["photo", "computers"] });
+CREATE (av:user { id: "av", name: "A. Vorobiev", gender:  "m", age: 22, city: "Chelyabinsk", groups: ["dancing", "computers"] });
+CREATE (pm:user { id: "pm", name: "P. Mikhailov", gender:  "m", age: 22, city: "Chelyabinsk", groups: ["games", "photo", "computers"] });
+CREATE (bi:user { id: "ap", name: "A. Polonski", gender:  "m", age: 25, city: "Kostanay", groups: ["games", "computers, "music"] });
+CREATE (ks:user { id: "am", name: "A. Mirinov", gender:  "m", age: 20, city: "Moscow", groups: ["music", "films"] });
+CREATE (kn:user { id: "tm", name: "T. Matvienko", gender:  "f", age: 21, city: "Chelyabinsk", groups: ["games", "computers"] });
+CREATE (ay:user { id: "vg", name: "V. Grabovskaya", gender:  "f", age: 23, city: "Chelyabinsk", groups: ["photo", "music"] });
+CREATE (ne:user { id: "ne", name: "N. Ezhova", gender:  "f", age: 23, city: "Chelyabinsk", groups: ["films", "games"] });
+
+// Create relations
+MATCH (a:user), (b:user) WHERE a.id = "dg" and b.id = "pm" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "dg" and b.id = "ag" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "dg" and b.id = "ds" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "dg" and b.id = "av" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "dg" and b.id = "ap" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "dg" and b.id = "am" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "dg" and b.id = "tm" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "dg" and b.id = "vg" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "dg" and b.id = "ne" CREATE (a)-[:FRIEND]->(b);
+
+MATCH (a:user), (b:user) WHERE a.id = "ag" and b.id = "av" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "ag" and b.id = "dg" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "ag" and b.id = "pm" CREATE (a)-[:FRIEND]->(b);
+
+MATCH (a:user), (b:user) WHERE a.id = "ds" and b.id = "av" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "ds" and b.id = "pm" CREATE (a)-[:FRIEND]->(b);
+MATCH (a:user), (b:user) WHERE a.id = "ds" and b.id = "dg" CREATE (a)-[:FRIEND]->(b);
