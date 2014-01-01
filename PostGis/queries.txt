@@ -1,0 +1,58 @@
+1) Выдать расстояние между двумя заданными населенными пунктам 
+SELECT setl1.name,
+       setl2.name,
+       ST_Distance(ST_Transform(setl1.the_geom, 32630), ST_Transform(setl2.the_geom, 32630)) / 1000
+  FROM settlements setl1,
+       settlements setl2
+WHERE setl1.name = 'Кемерово'
+   AND setl2.name = 'Новосибирск';
+
+
+2) Выдать площадь заданного субъекта РФ
+SELECT ST_Area(ST_Transform(setl.the_geom, 32630)) / 1000000 AS area
+  FROM settlements setl
+WHERE setl.name = 'Новосибирск';
+
+
+3) Выдать площади всех особо охраняемых природных территорий в республике Алтай
+SELECT admin.name,
+       oopt.name_r,
+       ST_Area(ST_Transform(oopt.the_geom, 32630))
+  FROM oopt LEFT JOIN admin
+                   ON ST_Contains(admin.the_geom, oopt.the_geom);
+
+
+4) Выдать без повторений пары субъектов РФ, имеющих общие границы
+SELECT adm1.name, adm2.name
+  FROM admin adm1 LEFT JOIN admin adm2
+                         ON ST_Intersects(adm1.the_geom, adm2.the_geom)
+                        AND adm1.id <> adm2.id
+WHERE adm1.id < adm2.id;
+
+
+5) Выдать суммарную длину дорог на территории Новосибирской области 
+SELECT admin.name,
+       SUM(ST_Length(ST_Transform(road.the_geom, 32630))) /1000 AS wholeLength
+  FROM admin,
+       "road-l-osm" road
+WHERE ST_Contains(admin.the_geom, road.the_geom)
+   AND admin.name = 'Новосибирская область'
+GROUP BY admin.name;
+
+
+6) Выдать общее количество населенных пунктов в каждом из субъектов РФ
+SELECT admin.name,
+       COUNT(setl)
+  FROM admin,
+       settlements setl
+WHERE ST_Contains(admin.the_geom, setl.the_geom)
+GROUP BY admin.name;
+
+
+7) Выдать общее количество озер в радиусе 100 км от Барнаула 
+SELECT COUNT(hydro)
+  FROM "hydro-a" hydro,
+       settlements setl
+WHERE hydro.name ~* 'озеро'
+   AND setl.name = 'Барнаул'
+   AND ST_Distance(ST_Transform(hydro.the_geom, 32630), ST_Transform(setl.the_geom, 32630)) < 100000;

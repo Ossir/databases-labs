@@ -1,0 +1,35 @@
+MAP
+    NAME      Roads
+    DEBUG     5
+    IMAGETYPE png24
+    EXTENT    74.8924 50.4 90.2278 55.8701
+    SIZE      2560 1440
+
+    LAYER
+        NAME           "roads"
+        STATUS         DEFAULT
+        TYPE           LINE
+        CONNECTIONTYPE POSTGIS
+        CONNECTION     "host=127.0.0.1 port=5432 dbname=geo user=user password=password"
+        DATA           "the_geom from (select the_geom, gid from \"railroad-l\") as newtable using unique gid using srid=4326"
+
+        CLASS
+            COLOR 255 0 0
+        END
+    END
+
+    LAYER  
+        NAME           "rw"
+        STATUS         DEFAULT
+        TYPE           LINE
+        CONNECTIONTYPE POSTGIS
+        CONNECTION     "host=127.0.0.1 port=5432 dbname=geo user=user password=password"
+        DATA           "the_geom from (select the_geom,gid from \"road-l-osm\") as newtable using unique gid using srid=4326"
+
+        CLASS
+            STYLE
+                COLOR 0 0 0
+            END
+        END
+    END
+END 

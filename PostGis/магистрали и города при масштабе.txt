@@ -1,0 +1,63 @@
+MAP
+    NAME      Zoom
+    DEBUG     5
+    IMAGETYPE png24
+    EXTENT    74.8924 50.4 90.2278 55.8701
+    SIZE      2560 1440
+
+    LAYER
+        NAME           "roads"
+        STATUS         DEFAULT
+        TYPE           LINE
+        CONNECTIONTYPE POSTGIS
+        CONNECTION     "host=127.0.0.1 port=5432 dbname=geo user=user password=password"
+        DATA           "the_geom from (select the_geom,gid from \"road-l-osm\" where type = 'trunk' or type = 'motorway') as newtable using unique gid using srid=4326"
+ 
+        CLASS
+            MINSCALEDENOM 1000000
+            COLOR         0 100 200
+        END
+    END
+
+    LAYER
+        NAME           "cities"
+        STATUS         DEFAULT
+        TYPE           POLYGON
+        CONNECTIONTYPE POSTGIS
+        CONNECTION     "host=127.0.0.1 port=5432 dbname=geo user=user password=password"
+        DATA           "the_geom from (select the_geom,gid from \"settlements\" where type = 'ã') as newtable using unique gid using srid=4326"
+
+        CLASS
+            MINSCALEDENOM 1000000
+            COLOR         0 100 200
+        END
+    END
+
+    LAYER
+        NAME           "roadsAll"
+        STATUS         DEFAULT
+        TYPE           LINE
+        CONNECTIONTYPE POSTGIS
+        CONNECTION     "host=127.0.0.1 port=5432 dbname=geo user=user password=password"
+        DATA           "the_geom from (select the_geom,gid from \"road-l-osm\") as newtable using unique gid using srid=4326"
+
+        CLASS
+            MAXSCALEDENOM 1000000
+            COLOR         0 100 200
+        END
+    END
+
+    LAYER
+        NAME           "citiesAll"
+        STATUS         DEFAULT
+        TYPE           POLYGON
+        CONNECTIONTYPE POSTGIS
+        CONNECTION     "host=127.0.0.1 port=5432 dbname=geo user=user password=password"
+        DATA           "the_geom from (select the_geom,gid from \"settlements\") as newtable using unique gid using srid=4326"
+
+        CLASS
+            MAXSCALEDENOM 1000000
+            COLOR         0 100 200
+        END
+    END
+END 

@@ -1,0 +1,44 @@
+MAP
+    NAME      Cities
+    DEBUG     5
+    IMAGETYPE png24
+    EXTENT    74.8924 50.4 90.2278 55.8701
+    SIZE      2560 1440
+
+    LAYER
+        NAME "union"
+        TYPE POLYGON
+        CONNECTIONTYPE UNION
+        CONNECTION "test,test2"
+        CLASS
+        END
+    END
+
+    LAYER  
+        NAME           "admin"
+        STATUS         DEFAULT
+        TYPE           POLYGON
+        CONNECTIONTYPE POSTGIS
+        CONNECTION     "host=127.0.0.1 port=5432 dbname=geo user=user password=password"
+        DATA           "the_geom from admin"
+
+        CLASS
+            COLOR 0 120 12
+        END
+    END
+
+    LAYER
+        NAME           "settles"
+        STATUS         DEFAULT
+        TYPE           POLYGON
+        CONNECTIONTYPE POSTGIS
+        CONNECTION     "host=127.0.0.1 port=5432 dbname=geo user=user password=password"
+        DATA           "the_geom from settlements"
+
+        CLASS 
+            STYLE
+                COLOR 255 0 0
+            END
+        END
+    END
+END 

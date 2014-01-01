@@ -1,0 +1,20 @@
+MAP
+    NAME      Water
+    DEBUG     5
+    IMAGETYPE png24
+    EXTENT    74.8924 50.4 90.2278 55.8701
+    SIZE      2560 1440
+
+    LAYER
+        NAME           "roads"
+        STATUS         DEFAULT
+        TYPE           POLYGON
+        CONNECTIONTYPE POSTGIS
+        CONNECTION     "host=127.0.0.1 port=5432 dbname=geo user=user password=password"
+        DATA           "the_geom from (select the_geom,gid from \"hydro-a\") as newtable using unique gid using srid=4326"
+
+        CLASS
+            COLOR 0 100 200
+        END
+    END
+END 
